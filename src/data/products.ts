@@ -27,10 +27,25 @@ export interface Product {
 
 export const categories: Category[] = [
   { id: "pc", title: "ألعاب PC", img: { url: "/images/cat-pc.jpg" }, itemCount: 5 },
-  { id: "playstation", title: "ألعاب PlayStation", img: { url: "/images/cat-playstation.jpg" }, itemCount: 3 },
+  {
+    id: "playstation",
+    title: "ألعاب PlayStation",
+    img: { url: "/images/cat-playstation.jpg" },
+    itemCount: 3,
+  },
   { id: "xbox", title: "ألعاب Xbox", img: { url: "/images/cat-xbox.jpg" }, itemCount: 3 },
-  { id: "subscriptions", title: "اشتراكات وخدمات", img: { url: "/images/cat-subscriptions.jpg" }, itemCount: 2 },
-  { id: "digital-cards", title: "بطاقات شحن رقمية", img: { url: "/images/cat-digital-cards.jpg" }, itemCount: 4 },
+  {
+    id: "subscriptions",
+    title: "اشتراكات وخدمات",
+    img: { url: "/images/cat-subscriptions.jpg" },
+    itemCount: 2,
+  },
+  {
+    id: "digital-cards",
+    title: "بطاقات شحن رقمية",
+    img: { url: "/images/cat-digital-cards.jpg" },
+    itemCount: 4,
+  },
 ];
 
 export const allProducts: Product[] = [
@@ -164,4 +179,3 @@ export const allProducts: Product[] = [
     featured: false,
   },
 ];
-

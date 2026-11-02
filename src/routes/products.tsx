@@ -1,28 +1,18 @@
 import { createFileRoute, Link, useSearch, useNavigate } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
-import {
-  Gamepad2,
-  Search,
-  ShoppingCart,
-  Menu,
-  X,
-  ArrowLeft,
-  Check,
-  Package,
-} from "lucide-react";
-import {
-  categories,
-  allProducts,
-  waLink,
-  type CategoryId,
-  type Product,
-} from "../data/products";
+import { Gamepad2, Search, ShoppingCart, Menu, X, ArrowLeft, Check, Package } from "lucide-react";
+import { categories, allProducts, waLink, type CategoryId, type Product } from "../data/products";
+
+type ProductSearch = {
+  category?: string | undefined;
+  q?: string | undefined;
+};
 
 export const Route = createFileRoute("/products")({
-  validateSearch: (search: Record<string, unknown>) => {
+  validateSearch: (search: Record<string, unknown>): ProductSearch => {
     return {
-      category: typeof search.category === "string" ? search.category : "all",
-      q: typeof search.q === "string" ? search.q : "",
+      category: typeof search["category"] === "string" ? search["category"] : undefined,
+      q: typeof search["q"] === "string" ? search["q"] : undefined,
     };
   },
   head: () => ({
@@ -165,7 +155,9 @@ function ProductCard({ product }: { product: Product }) {
       </div>
       <div className="mt-3 flex flex-1 flex-col justify-between">
         <div>
-          <span className="text-[11px] font-bold text-muted-foreground">{product.categoryTitle}</span>
+          <span className="text-[11px] font-bold text-muted-foreground">
+            {product.categoryTitle}
+          </span>
           <h3 className="mt-1 line-clamp-2 text-sm font-extrabold text-navy sm:text-base">
             {product.title}
           </h3>
@@ -221,7 +213,8 @@ function Footer() {
             <span className="text-xl font-black">شجن جيفتكار</span>
           </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/75">
-            أهلاً بك في متجرك الأول لبطاقات شحن الألعاب والاشتراكات الرقمية. تسليم فوري عبر الواتساب في دقائق.
+            أهلاً بك في متجرك الأول لبطاقات شحن الألعاب والاشتراكات الرقمية. تسليم فوري عبر الواتساب
+            في دقائق.
           </p>
         </div>
 
@@ -240,11 +233,17 @@ function Footer() {
                       {link.label}
                     </Link>
                   ) : link.to ? (
-                    <Link to={link.to} className="text-sm text-white/70 transition-colors hover:text-white">
+                    <Link
+                      to={link.to}
+                      className="text-sm text-white/70 transition-colors hover:text-white"
+                    >
                       {link.label}
                     </Link>
                   ) : (
-                    <a href={link.href} className="text-sm text-white/70 transition-colors hover:text-white">
+                    <a
+                      href={link.href}
+                      className="text-sm text-white/70 transition-colors hover:text-white"
+                    >
                       {link.label}
                     </a>
                   )}
@@ -268,14 +267,14 @@ function ProductsPage() {
   const searchParams = useSearch({ from: "/products" });
   const navigate = useNavigate({ from: "/products" });
 
-  const activeCategory = (searchParams.category as CategoryId) || "all";
-  const [searchTerm, setSearchTerm] = useState(searchParams.q || "");
+  const activeCategory = (searchParams["category"] as CategoryId) || "all";
+  const [searchTerm, setSearchTerm] = useState(searchParams["q"] || "");
 
   const handleCategoryChange = (catId: CategoryId) => {
     navigate({
       search: (prev) => ({
         ...prev,
-        category: catId,
+        category: catId === "all" ? undefined : catId,
       }),
     });
   };
@@ -301,11 +300,15 @@ function ProductsPage() {
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div>
               <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground">
-                <Link to="/" className="hover:text-primary">الرئيسية</Link>
+                <Link to="/" className="hover:text-primary">
+                  الرئيسية
+                </Link>
                 <span>/</span>
                 <span className="text-primary">المنتجات</span>
               </div>
-              <h1 className="mt-2 text-2xl font-black text-navy sm:text-3xl">جميع المنتجات والبطاقات الرقمية</h1>
+              <h1 className="mt-2 text-2xl font-black text-navy sm:text-3xl">
+                جميع المنتجات والبطاقات الرقمية
+              </h1>
               <p className="mt-1 text-sm text-muted-foreground">
                 اختر بطاقتك أو لعبتك المفضلة واطلبها عبر الواتساب فوراً.
               </p>
@@ -347,7 +350,9 @@ function ProductsPage() {
               }`}
             >
               الكل
-              <span className={`ms-1 rounded-full px-1.5 py-0.2 text-[10px] ${activeCategory === "all" ? "bg-white/20 text-white" : "bg-background text-muted-foreground"}`}>
+              <span
+                className={`ms-1 rounded-full px-1.5 py-0.2 text-[10px] ${activeCategory === "all" ? "bg-white/20 text-white" : "bg-background text-muted-foreground"}`}
+              >
                 {allProducts.length}
               </span>
             </button>
@@ -366,7 +371,9 @@ function ProductsPage() {
                   }`}
                 >
                   {c.title}
-                  <span className={`ms-1 rounded-full px-1.5 py-0.2 text-[10px] ${isActive ? "bg-white/20 text-white" : "bg-background text-muted-foreground"}`}>
+                  <span
+                    className={`ms-1 rounded-full px-1.5 py-0.2 text-[10px] ${isActive ? "bg-white/20 text-white" : "bg-background text-muted-foreground"}`}
+                  >
                     {count}
                   </span>
                 </button>
@@ -382,7 +389,13 @@ function ProductsPage() {
           <p className="text-xs font-bold text-muted-foreground sm:text-sm">
             عرض <span className="font-extrabold text-navy">{filteredProducts.length}</span> منتج
             {activeCategory !== "all" && (
-              <span> في قسم <span className="text-primary font-extrabold">{categories.find((c) => c.id === activeCategory)?.title}</span></span>
+              <span>
+                {" "}
+                في قسم{" "}
+                <span className="text-primary font-extrabold">
+                  {categories.find((c) => c.id === activeCategory)?.title}
+                </span>
+              </span>
             )}
             {searchTerm && <span> مطابقة لـ &ldquo;{searchTerm}&rdquo;</span>}
           </p>
@@ -411,7 +424,8 @@ function ProductsPage() {
             <Package className="h-14 w-14 text-muted-foreground/60" />
             <h3 className="mt-4 text-base font-extrabold text-navy">لا توجد منتجات مطابقة</h3>
             <p className="mt-1 max-w-sm text-xs text-muted-foreground">
-              لم نعثر على أي بطاقات أو منتجات تطابق بحثك. تواصل معنا عبر الواتساب لتوفير أي بطاقة تريدها!
+              لم نعثر على أي بطاقات أو منتجات تطابق بحثك. تواصل معنا عبر الواتساب لتوفير أي بطاقة
+              تريدها!
             </p>
             <div className="mt-5 flex gap-3">
               <button
@@ -441,4 +455,3 @@ function ProductsPage() {
     </div>
   );
 }
-

@@ -13,13 +13,7 @@ import {
   BadgeCheck,
 } from "lucide-react";
 
-import {
-  categories,
-  allProducts,
-  waLink,
-  type Category,
-  type Product,
-} from "../data/products";
+import { categories, allProducts, waLink, type Category, type Product } from "../data/products";
 
 const heroBanner = { url: "/images/hero-banner.jpg" };
 const contactBanner = { url: "/images/contact-banner.jpg" };
@@ -67,13 +61,7 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-function SectionHeader({
-  title,
-  to = "/products",
-}: {
-  title: string;
-  to?: string;
-}) {
+function SectionHeader({ title, to = "/products" }: { title: string; to?: string }) {
   return (
     <div className="flex items-center justify-between gap-4">
       <div className="flex items-center gap-3">
@@ -380,11 +368,17 @@ function Footer() {
                       {link.label}
                     </Link>
                   ) : link.to ? (
-                    <Link to={link.to} className="text-sm text-white/70 transition-colors hover:text-white">
+                    <Link
+                      to={link.to}
+                      className="text-sm text-white/70 transition-colors hover:text-white"
+                    >
                       {link.label}
                     </Link>
                   ) : (
-                    <a href={link.href} className="text-sm text-white/70 transition-colors hover:text-white">
+                    <a
+                      href={link.href}
+                      className="text-sm text-white/70 transition-colors hover:text-white"
+                    >
                       {link.label}
                     </a>
                   )}
